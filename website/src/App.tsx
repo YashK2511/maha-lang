@@ -2,18 +2,52 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import { runBol, RunResult } from './runBol';
 import './App.css';
+import { registerBolLanguage } from './bolLanguage';
 
-const DEFAULT_CODE = `bola saheb
-
+const EXAMPLES = {
+  hello: `bola saheb
+-- Hello World
 he bol "Hello World!"
+yeto saheb`,
+  factorial: `bola saheb
+-- Factorial using recursion
+karya factorial(n) {
+  jr n <= 1 {
+    parat 1
+  }
+  parat n * factorial(n - 1)
+}
 
-yeto saheb`;
+he bol "Factorial of 5 is:"
+he bol factorial(5)
+yeto saheb`,
+  fibonacci: `bola saheb
+-- Fibonacci sequence
+he ghe a = 0
+he ghe b = 1
+he ghe temp = 0
+he ghe n = 10
+
+he bol "Fibonacci up to " + n + " terms:"
+
+joparyant n > 0 {
+  he bol a
+  temp = a + b
+  a = b
+  b = temp
+  n = n - 1
+}
+yeto saheb`
+};
+
+const DEFAULT_CODE = EXAMPLES.hello;
 
 function App() {
   const [code, setCode] = useState(DEFAULT_CODE);
   const [output, setOutput] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<'ready' | 'running' | 'success' | 'error'>('ready');
+  const [selectedExample, setSelectedExample] = useState('hello');
   const playgroundRef = useRef<HTMLDivElement>(null);
 
   const handleRun = useCallback(() => {
@@ -29,6 +63,22 @@ function App() {
       setStatus(result.error ? 'error' : 'success');
     }, 50);
   }, [code]);
+
+  const handleExampleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const key = e.target.value as keyof typeof EXAMPLES;
+    setSelectedExample(key);
+    setCode(EXAMPLES[key]);
+    setStatus('ready');
+    setOutput([]);
+    setError(null);
+  };
+
+  const handleReset = () => {
+    setCode(EXAMPLES[selectedExample as keyof typeof EXAMPLES]);
+    setStatus('ready');
+    setOutput([]);
+    setError(null);
+  };
 
   const scrollToPlayground = () => {
     playgroundRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -52,7 +102,7 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Section 1: Hero */}
+      {/* SECTION 1: HERO / INTRO */}
       <section className="hero">
         <div className="hero-content">
           <div className="hero-logo">🗣️ BOL</div>
@@ -65,48 +115,88 @@ function App() {
           </div>
           <div className="hero-actions">
             <button className="btn btn-primary" onClick={scrollToPlayground}>Try Playground</button>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">View GitHub</a>
+            <a href="https://github.com/YashK2511/bol-lang" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">View GitHub</a>
           </div>
         </div>
       </section>
 
-      {/* Section 2: What I Built (Architecture) */}
-      <section className="architecture section">
+      {/* SECTION 2: WHAT I BUILT */}
+      <section className="built section">
         <div className="section-container">
           <h2 className="section-title">What I Built</h2>
-          <p className="section-description">
-            I built a complete end-to-end execution pipeline in TypeScript, following the classic stages of language implementation.
-          </p>
-          <div className="architecture-grid">
-            <div className="arch-card">
-              <div className="arch-icon">🔍</div>
-              <h3>Lexer</h3>
-              <p>Converts raw source code into a stream of meaningful tokens.</p>
-            </div>
-            <div className="arch-card">
-              <div className="arch-icon">🌳</div>
-              <h3>Parser</h3>
-              <p>Transforms tokens into an Abstract Syntax Tree (AST) using recursive descent.</p>
-            </div>
-            <div className="arch-card">
-              <div className="arch-icon">⚙️</div>
-              <h3>Interpreter</h3>
-              <p>Walks the AST and executes logic directly with a custom environment and scope management.</p>
+          <div className="content-box">
+            <p className="text-large">
+              BOL is an interpreted programming language designed to be small, explicit, and educational.
+            </p>
+            <div className="feature-grid">
+              <div className="feature-item">
+                <strong>Custom Interpreter</strong>
+                <p>Written entirely in TypeScript with zero dependencies.</p>
+              </div>
+              <div className="feature-item">
+                <strong>End-to-End Pipeline</strong>
+                <p>From character stream to AST execution.</p>
+              </div>
+              <div className="feature-item">
+                <strong>CLI & Web</strong>
+                <p>Packaged as a production-ready CLI and this web playground.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 3: Playground */}
-      <section className="playground section" ref={playgroundRef}>
+      {/* SECTION 3: HOW IT WORKS (PIPELINE) */}
+      <section className="works section">
+        <div className="section-container">
+          <h2 className="section-title">How It Works</h2>
+          <p className="section-description">
+            The BOL engine executes code in three distinct phases.
+          </p>
+          <div className="pipeline">
+            <div className="pipeline-step">
+              <div className="step-tag">1</div>
+              <h3>Lexer</h3>
+              <p>Breaks source code into <strong>Tokens</strong> like keywords, numbers, and strings.</p>
+            </div>
+            <div className="pipeline-arrow">→</div>
+            <div className="pipeline-step">
+              <div className="step-tag">2</div>
+              <h3>Parser</h3>
+              <p>Builds an <strong>Abstract Syntax Tree</strong> (AST) using recursive descent.</p>
+            </div>
+            <div className="pipeline-arrow">→</div>
+            <div className="pipeline-step">
+              <div className="step-tag">3</div>
+              <h3>Interpreter</h3>
+              <p>Walks the <strong>AST</strong> and performs runtime operations with scope and environment management.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: PLAYGROUND */}
+      <section className="playground section" ref={playgroundRef} id="playground">
         <div className="section-container full-width">
           <div className="playground-header">
-            <h2 className="section-title">Try it Yourself</h2>
-            <p className="section-description white">Edit the code and click Run to see how the language executes.</p>
+            <h2 className="section-title">Interative Playground</h2>
+            <p className="section-description white">Write BOL code and see it execute in real-time within your browser.</p>
           </div>
 
           <div className="playground-container">
             <header className="playground-toolbar">
+              <div className="toolbar-left">
+                <select
+                  className="example-selector"
+                  value={selectedExample}
+                  onChange={handleExampleChange}
+                >
+                  <option value="hello">Hello World</option>
+                  <option value="factorial">Factorial</option>
+                  <option value="fibonacci">Fibonacci</option>
+                </select>
+                <button className="reset-button" onClick={handleReset}>Ghalav (Reset)</button>
+              </div>
               <div className="actions">
                 <button
                   className={`run-button ${status === 'running' ? 'loading' : ''}`}
@@ -117,7 +207,7 @@ function App() {
                 </button>
                 <div className={`status-badge ${status}`}>
                   {status === 'ready' && 'Tayyar'}
-                  {status === 'running' && 'Chalu Aahe'}
+                  {status === 'running' && 'Chalu'}
                   {status === 'success' && 'Yashasvi'}
                   {status === 'error' && 'Chuk'}
                 </div>
@@ -133,8 +223,9 @@ function App() {
                 <div className="editor-inner">
                   <Editor
                     height="100%"
-                    defaultLanguage="javascript"
-                    theme="vs-dark"
+                    language="bol"
+                    theme="bol-theme"
+                    beforeMount={registerBolLanguage}
                     value={code}
                     onChange={(val) => setCode(val || '')}
                     options={{
@@ -171,56 +262,38 @@ function App() {
         </div>
       </section>
 
-      {/* Section 4: Language Syntax */}
-      <section className="syntax section">
+      {/* SECTION 5: HOW TO USE */}
+      <section className="usage section">
         <div className="section-container">
-          <h2 className="section-title">Language Syntax</h2>
-          <div className="syntax-grid">
-            <div className="syntax-item">
-              <h3>Variables</h3>
-              <pre><code>{`he ghe x = 10\nhe bol x`}</code></pre>
-              <p>Declare with <code>he ghe</code> and print with <code>he bol</code>.</p>
+          <h2 className="section-title">How To Use</h2>
+          <div className="usage-grid">
+            <div className="usage-card">
+              <h3>For Web</h3>
+              <p>Use the editor above to experiment with variables, loops, and functions instantly.</p>
             </div>
-            <div className="syntax-item">
-              <h3>Control Flow</h3>
-              <pre><code>{`jr x > 5 {\n  he bol "mota"\n}`}</code></pre>
-              <p>Classic <code>jr</code> (if) and <code>joparyant</code> (while) logic.</p>
+            <div className="usage-card">
+              <h3>For CLI</h3>
+              <p>Install via npm and run local files:</p>
+              <code>bol run maza.bol</code>
             </div>
-            <div className="syntax-item">
-              <h3>Functions</h3>
-              <pre><code>{`karya add(a, b) {\n  parat a + b\n}`}</code></pre>
-              <p>Define with <code>karya</code> and return with <code>parat</code>.</p>
+            <div className="usage-card">
+              <h3>Syntax</h3>
+              <ul>
+                <li><code>he ghe x = 5</code> — Declare</li>
+                <li><code>he bol x</code> — Print</li>
+                <li><code>jr x &gt; 0</code> — If</li>
+                <li><code>karya f()</code> — Function</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 5: Quick Start */}
-      <section className="quick-start section">
-        <div className="section-container">
-          <h2 className="section-title">How to Use It</h2>
-          <div className="steps">
-            <div className="step">
-              <div className="step-num">1</div>
-              <div className="step-text">Write BOL code in the playground or a <code>.bol</code> file.</div>
-            </div>
-            <div className="step">
-              <div className="step-num">2</div>
-              <div className="step-text">Run it using the CLI: <code>bol run file.bol</code></div>
-            </div>
-            <div className="step">
-              <div className="step-num">3</div>
-              <div className="step-text">See the results instantly in your console or browser.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 6: Footer */}
+      {/* SECTION 6: FOOTER */}
       <footer className="footer-v2">
         <div className="footer-content">
           <div className="footer-links">
-            <a href="https://github.com">GitHub Repository</a>
+            <a href="https://github.com/YashK2511/bol-lang" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
           </div>
           <p className="copyright">Built for learning by Yash • 2026</p>
           <p className="disclaimer">

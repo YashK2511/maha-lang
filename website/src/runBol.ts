@@ -1,6 +1,6 @@
-import { Lexer } from "../../src/lexer/Lexer";
-import { Parser } from "../../src/parser/Parser";
-import { Interpreter } from "../../src/interpreter/Interpreter";
+import { Lexer } from "./core/lexer/Lexer";
+import { Parser } from "./core/parser/Parser";
+import { Interpreter } from "./core/interpreter/Interpreter";
 
 export interface RunResult {
     lines: string[];
