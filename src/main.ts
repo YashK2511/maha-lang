@@ -5,53 +5,49 @@ import { Parser } from "./parser/Parser.js";
 import { Interpreter } from "./interpreter/Interpreter.js";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// main.ts — CLI entry point for Bol.
-//
-// Usage:
-//   npx tsx src/main.ts <file.bol>
+// main.ts — interpreter engine for Bol.
 //
 // Pipeline:
-//   source file → Lexer → token[] → Parser → Program AST → Interpreter → stdout
+//   source → Lexer → tokens → Parser → AST → Interpreter → stdout
+//
+// Exported:
+//   runFile(filePath) — called by cli.ts; throws on error so the CLI
+//                       can control how the error is displayed.
+//
+// Direct invocation (dev mode):
+//   npx tsx src/main.ts <file.bol>
 // ─────────────────────────────────────────────────────────────────────────────
 
-function main(): void {
-    const filePath = process.argv[2];
+/**
+ * Run a Bol source file.
+ * @param filePath - absolute or relative path to a .bol file
+ * Throws LexerError | ParseError | RuntimeError on failure.
+ */
+export function runFile(filePath: string): void {
+    const absolutePath = path.resolve(filePath);
+    const source = fs.readFileSync(absolutePath, "utf-8");
 
+    const tokens = new Lexer(source).tokenize();
+    const program = new Parser(tokens).parse();
+    new Interpreter().run(program);
+}
+
+// ── Direct invocation guard (dev mode) ───────────────────────────────────────
+
+if (require.main === module) {
+    const filePath = process.argv[2];
     if (!filePath) {
         console.error("Vapar: npx tsx src/main.ts <file.bol>");
         process.exit(1);
     }
-
-    const absolutePath = path.resolve(filePath);
-
-    if (!fs.existsSync(absolutePath)) {
-        console.error(`Chuk: File saapadla nahi — "${absolutePath}"`);
+    if (!fs.existsSync(path.resolve(filePath))) {
+        console.error(`Chuk: File saapadla nahi — "${path.resolve(filePath)}"`);
         process.exit(1);
     }
-
-    const source = fs.readFileSync(absolutePath, "utf-8");
-
     try {
-        // Step 1 — Tokenize
-        const lexer = new Lexer(source);
-        const tokens = lexer.tokenize();
-
-        // Step 2 — Parse
-        const parser = new Parser(tokens);
-        const program = parser.parse();
-
-        // Step 3 — Interpret
-        const interpreter = new Interpreter();
-        interpreter.run(program);
-
+        runFile(filePath);
     } catch (err: unknown) {
-        if (err instanceof Error) {
-            console.error(`\n❌ ${err.name}: ${err.message}\n`);
-        } else {
-            console.error("❌ Anolkhit error:", err);
-        }
+        console.error(`\n❌ ${(err as Error).name}: ${(err as Error).message}\n`);
         process.exit(1);
     }
 }
-
-main();
