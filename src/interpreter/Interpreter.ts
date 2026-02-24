@@ -36,6 +36,8 @@ export class Interpreter {
 
     // ── Public API ────────────────────────────────────────────────────────────
 
+    constructor(private output: (line: string) => void = console.log) { }
+
     run(program: Program): void {
         // Pass 1: hoist all function declarations into the global scope.
         for (const stmt of program.stmts) {
@@ -64,7 +66,7 @@ export class Interpreter {
                 env.assign(stmt.name, this.evalExpr(stmt.value, env));
                 break;
             case "HeBol":
-                console.log(this.display(this.evalExpr(stmt.value, env)));
+                this.output(this.display(this.evalExpr(stmt.value, env)));
                 break;
 
             // ── Phase 2 ────────────────────────────────────────────────────
