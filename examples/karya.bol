@@ -1,0 +1,42 @@
+-- karya.bol
+-- Demonstrates Phase 3: function definitions, calls, and return statements.
+--
+-- Expected output:
+--   8
+--   Namaskar, Bol!
+--   25
+--   10
+
+bola saheb
+
+-- Simple function: add two numbers
+karya add(a, b) {
+  parat a + b
+}
+
+-- Void function: no return value
+karya greet(name) {
+  he bol "Namaskar, " + name + "!"
+}
+
+-- Function using local variables
+karya square(n) {
+  he ghe result = n * n
+  parat result
+}
+
+-- Nested call: add(3, add(2, 3))
+he ghe r1 = add(3, add(2, 3))
+he bol r1                           -- 8
+
+-- Void function call result stored as shunya
+he ghe _ = greet("Bol")             -- prints: Namaskar, Bol!
+
+-- Local variable does not leak
+he ghe r2 = square(5)
+he bol r2                           -- 25
+
+-- Call result used directly in an expression
+he bol add(4, 6)                    -- 10
+
+yeto saheb

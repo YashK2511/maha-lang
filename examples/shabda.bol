@@ -1,0 +1,21 @@
+-- shabda.bol
+-- String variables and concatenation with +
+-- Expected output:
+--   Namaskar, Yash!
+--   Bol version: 1
+--   Punha bhet!
+
+bola saheb
+  he ghe nav = "Yash"
+  he ghe abhivadan = "Namaskar, " + nav + "!"
+  he bol abhivadan
+
+  -- Concatenate number with string
+  he ghe aavrutti = 1
+  he bol "Bol version: " + aavrutti
+
+  -- Reassign a string variable
+  he ghe nirop = "Alvida!"
+  nirop = "Punha bhet!"
+  he bol nirop
+yeto saheb

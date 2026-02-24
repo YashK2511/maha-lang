@@ -1,0 +1,16 @@
+{
+  "name": "bol-lang",
+  "version": "1.0.0",
+  "description": "Bol - A Marathi toy programming language",
+  "main": "src/main.ts",
+  "scripts": {
+    "run": "npx tsx src/main.ts",
+    "test:lexer": "npx tsx src/tests/lexer.test.ts",
+    "test:parser": "npx tsx src/tests/parser.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

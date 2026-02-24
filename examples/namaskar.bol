@@ -1,0 +1,10 @@
+-- namaskar.bol
+-- Sabhat saral Bol program — "Hello, World!" print karto.
+-- Expected output:
+--   Namaskar, Jaga!
+--   Bol bhasha shika!
+
+bola saheb
+  he bol "Namaskar, Jaga!"
+  he bol "Bol bhasha shika!"
+yeto saheb

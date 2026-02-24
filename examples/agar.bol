@@ -1,0 +1,54 @@
+-- agar.bol
+-- Demonstrates: if / else-if / else, comparison operators, logical operators.
+--
+-- Expected output:
+--   x mota aahe
+--   dono positive aahe
+--   nahi khota = khara
+--   x vel y barobar aahet
+
+bola saheb
+
+  -- ── Simple if / else-if / else ─────────────────────────────────────────────
+  he ghe x = 15
+
+  jr x > 20 {
+    he bol "x khup mota aahe"
+  } nahitr jr x > 10 {
+    he bol "x mota aahe"
+  } nahitr {
+    he bol "x chota aahe"
+  }
+  -- Expected: x mota aahe
+
+  -- ── Logical AND ────────────────────────────────────────────────────────────
+  he ghe a = 5
+  he ghe b = 8
+
+  jr a > 0 ani b > 0 {
+    he bol "dono positive aahe"
+  } nahitr {
+    he bol "ek tari negative aahe"
+  }
+  -- Expected: dono positive aahe
+
+  -- ── Logical NOT ────────────────────────────────────────────────────────────
+  he ghe chuk = khota
+
+  jr nahi chuk {
+    he bol "nahi khota = khara"
+  }
+  -- Expected: nahi khota = khara
+
+  -- ── Equality comparison ─────────────────────────────────────────────────────
+  he ghe vel = 7
+  he ghe doosra_vel = 7
+
+  jr vel == doosra_vel {
+    he bol "x vel y barobar aahet"
+  } nahitr {
+    he bol "x vel y vegale aahet"
+  }
+  -- Expected: x vel y barobar aahet
+
+yeto saheb

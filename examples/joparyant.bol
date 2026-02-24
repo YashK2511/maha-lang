@@ -1,0 +1,60 @@
+-- joparyant.bol
+-- Demonstrates: while loops, break, and continue.
+--
+-- Expected output:
+--   0
+--   1
+--   2
+--   3
+--   4
+--   ---
+--   0
+--   1
+--   3
+--   4
+--   ---
+--   10
+
+bola saheb
+
+  -- ── Basic while loop ────────────────────────────────────────────────────────
+  -- Print 0 through 4
+  he ghe i = 0
+  joparyant i < 5 {
+    he bol i
+    i = i + 1
+  }
+  -- Expected: 0  1  2  3  4
+
+  he bol "---"
+
+  -- ── While with continue ─────────────────────────────────────────────────────
+  -- Print 0 through 4, but skip 2
+  i = 0
+  joparyant i < 5 {
+    jr i == 2 {
+      i = i + 1
+      pudhe ja          -- skip the rest of this iteration
+    }
+    he bol i
+    i = i + 1
+  }
+  -- Expected: 0  1  3  4
+
+  he bol "---"
+
+  -- ── While with break ────────────────────────────────────────────────────────
+  -- Sum numbers 1..4; stop early when sum exceeds 9
+  he ghe som = 0
+  he ghe j = 1
+  joparyant j < 100 {
+    som = som + j
+    jr som > 9 {
+      thamb             -- exit loop immediately
+    }
+    j = j + 1
+  }
+  he bol som
+  -- 1+2+3+4 = 10, next would be 15 which is > 9, so we stop at 10
+
+yeto saheb

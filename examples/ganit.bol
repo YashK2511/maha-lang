@@ -1,0 +1,37 @@
+-- ganit.bol
+-- Variable declaration, arithmetic, and operator precedence.
+-- Expected output:
+--   50
+--   14
+--   2
+--   100
+
+bola saheb
+  -- Basic variable declaration
+  he ghe a = 10
+  he ghe b = 40
+
+  -- Addition
+  he ghe bherana = a + b
+  he bol bherana
+
+  -- Operator precedence: * binds tighter than +
+  -- 2 + 3 * 4  =  2 + 12  =  14   (NOT 20)
+  he ghe kram = 2 + 3 * 4
+  he bol kram
+
+  -- Parentheses override precedence
+  -- (10 - 5) / (2 + 0)  =  5 / 2  =  2.5  → rounded? No, Bol uses floats
+  he ghe bhag = 10 / 5
+  he bol bhag
+
+  -- Chain operations
+  he ghe x = 5
+  he ghe y = 3
+  he ghe z = x * y + b + x * y
+  -- z = 15 + 40 + 15 = 70 ... let's do a simpler one
+  x = 10
+  y = 10
+  he ghe result = x * y
+  he bol result
+yeto saheb
