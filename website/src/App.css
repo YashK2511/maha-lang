@@ -316,11 +316,50 @@
   margin-bottom: 12px;
 }
 
+.footer-contact {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 20px !important;
+}
+
 .footer-links {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 16px;
   margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background-color: var(--bg-second);
+  color: var(--text-dim);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.footer-btn:hover {
+  transform: translateY(-2px);
+  color: white;
+}
+
+.github-btn:hover {
+  background-color: #24292e;
+  border-color: #555;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.linkedin-btn:hover {
+  background-color: #0077b5;
+  border-color: #0077b5;
+  box-shadow: 0 6px 20px rgba(0, 119, 181, 0.35);
 }
 
 @media (max-width: 900px) {
