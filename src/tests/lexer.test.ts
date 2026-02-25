@@ -83,8 +83,8 @@ test("tracks line numbers", () => {
 
 console.log("\n── Phase 2 ──\n");
 
-test("emits KHARA for 'khara'", () => assert.strictEqual(firstOf("khara").kind, TokenKind.KHARA));
-test("emits KHOTA for 'khota'", () => assert.strictEqual(firstOf("khota").kind, TokenKind.KHOTA));
+test("emits KHARA for 'barobr'", () => assert.strictEqual(firstOf("barobr").kind, TokenKind.KHARA));
+test("emits KHOTA for 'chuk'", () => assert.strictEqual(firstOf("chuk").kind, TokenKind.KHOTA));
 test("emits ANI for 'ani'", () => assert.strictEqual(firstOf("ani").kind, TokenKind.ANI));
 test("emits KINVA for 'kinva'", () => assert.strictEqual(firstOf("kinva").kind, TokenKind.KINVA));
 test("emits NAHI for 'nahi'", () => assert.strictEqual(firstOf("nahi").kind, TokenKind.NAHI));

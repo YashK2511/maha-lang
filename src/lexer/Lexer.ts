@@ -259,8 +259,8 @@ const SINGLE_KEYWORDS: Record<string, TokenKind> = {
     "karya": TokenKind.KARYA,         // function   [Phase 3]
     "parat": TokenKind.PARAT,         // return     [Phase 3]
     "shunya": TokenKind.SHUNYA,       // null       [Phase 3]
-    "khara": TokenKind.KHARA,
-    "khota": TokenKind.KHOTA,
+    "barobr": TokenKind.KHARA,
+    "chuk": TokenKind.KHOTA,
     "ani": TokenKind.ANI,
     "kinva": TokenKind.KINVA,
     "nahi": TokenKind.NAHI,

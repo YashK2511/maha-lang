@@ -323,7 +323,7 @@ export class Interpreter {
 
     private display(val: Value): string {
         if (val === null) return "shunya";
-        if (typeof val === "boolean") return val ? "khara" : "khota";
+        if (typeof val === "boolean") return val ? "barobr" : "chuk";
         if (typeof val === "number") return val.toString();
         if (typeof val === "object" && val.kind === "Function")
             return `<karya ${val.name}>`;

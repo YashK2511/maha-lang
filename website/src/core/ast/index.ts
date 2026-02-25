@@ -19,7 +19,7 @@ export type StringLiteral = {
     value: string;
 };
 
-/** A literal boolean:   khara (true)   khota (false) */
+/** A literal boolean:   barobr (true)   chuk (false) */
 export type BooleanLiteral = {
     kind: "Boolean";
     value: boolean;

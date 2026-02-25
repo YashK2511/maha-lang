@@ -32,7 +32,7 @@ export class Environment {
     declare(name: string, value: Value): void {
         if (this.vars.has(name)) {
             throw new RuntimeError(
-                `"${name}" aadheech declared aahe — dobara "he ghe" vaparoo nakos`
+                `chuk zali na: "${name}" aadheech declared aahe — dobara "he ghe" vaparoo nakos`
             );
         }
         this.vars.set(name, value);
@@ -52,7 +52,7 @@ export class Environment {
             return;
         }
         throw new RuntimeError(
-            `"${name}" declared nahi — aadhi "he ghe ${name} = ..." kar`
+            `chuk zali na: "${name}" declared nahi — aadhi "he ghe ${name} = ..." kar`
         );
     }
 
@@ -68,7 +68,7 @@ export class Environment {
             return this.parent.get(name);
         }
         throw new RuntimeError(
-            `"${name}" saapadla nahi — declared aahe ka?`
+            `chuk zali na: "${name}" saapadla nahi — declared aahe ka?`
         );
     }
 }

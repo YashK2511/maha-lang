@@ -28,9 +28,8 @@ export enum TokenKind {
     PARAT = "PARAT",             // "parat"        — return     [Phase 3]
     SHUNYA = "SHUNYA",           // "shunya"       — null       [Phase 3]
 
-    // ── Boolean & null keywords ───────────────────────────────────
-    KHARA = "KHARA",             // "khara"        — true       [Phase 2]
-    KHOTA = "KHOTA",             // "khota"        — false      [Phase 2]
+    KHARA = "KHARA",             // "barobr"        — true       [Phase 2]
+    KHOTA = "KHOTA",             // "chuk"        — false      [Phase 2]
 
     // ── Logical operator keywords ─────────────────────────────────
     ANI = "ANI",                 // "ani"          — and        [Phase 2]

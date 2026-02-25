@@ -7,7 +7,7 @@ export function registerBolLanguage(monaco: Monaco) {
         keywords: [
             "bola", "saheb", "yeto", "he", "ghe", "bol", "jr", "nahitr",
             "joparyant", "thamb", "pudhe", "ja", "karya", "parat",
-            "khara", "khota", "shunya", "ani", "kinva", "nahi"
+            "barobr", "chuk", "shunya", "ani", "kinva", "nahi"
         ],
 
         tokenizer: {

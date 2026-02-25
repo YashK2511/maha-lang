@@ -86,12 +86,12 @@ test("throws on unknown keyword", () => {
 
 console.log("\n── Phase 2 ──\n");
 
-test("khara → BooleanLiteral(true)", () => {
-    const stmt = parse("bola saheb\nhe ghe x = khara\nyeto saheb").stmts[0] as HeGheStatement;
+test("barobr → BooleanLiteral(true)", () => {
+    const stmt = parse("bola saheb\nhe ghe x = barobr\nyeto saheb").stmts[0] as HeGheStatement;
     assert.strictEqual((stmt.value as BooleanLiteral).value, true);
 });
-test("khota → BooleanLiteral(false)", () => {
-    const stmt = parse("bola saheb\nhe ghe x = khota\nyeto saheb").stmts[0] as HeGheStatement;
+test("chuk → BooleanLiteral(false)", () => {
+    const stmt = parse("bola saheb\nhe ghe x = chuk\nyeto saheb").stmts[0] as HeGheStatement;
     assert.strictEqual((stmt.value as BooleanLiteral).value, false);
 });
 test("parses == as Binary node", () => {
@@ -105,18 +105,18 @@ test("comparison binds tighter than ani", () => {
     assert.strictEqual((outer.left as BinaryExpr).op, ">");
 });
 test("ani binds tighter than kinva", () => {
-    const stmt = parse("bola saheb\nhe ghe r = khara kinva khota ani khara\nyeto saheb").stmts[0] as HeGheStatement;
+    const stmt = parse("bola saheb\nhe ghe r = barobr kinva chuk ani barobr\nyeto saheb").stmts[0] as HeGheStatement;
     const outer = stmt.value as BinaryExpr;
     assert.strictEqual(outer.op, "kinva");
     assert.strictEqual((outer.right as BinaryExpr).op, "ani");
 });
 test("nahi → UnaryExpr", () => {
-    const stmt = parse("bola saheb\nhe ghe r = nahi khota\nyeto saheb").stmts[0] as HeGheStatement;
+    const stmt = parse("bola saheb\nhe ghe r = nahi chuk\nyeto saheb").stmts[0] as HeGheStatement;
     assert.strictEqual(stmt.value.kind, "Unary");
     assert.strictEqual((stmt.value as UnaryExpr).op, "nahi");
 });
 test("simple jr statement — correct shape", () => {
-    const prog = parse(`bola saheb\njr khara {\n  he bol "ja"\n}\nyeto saheb`);
+    const prog = parse(`bola saheb\njr barobr {\n  he bol "ja"\n}\nyeto saheb`);
     const stmt = prog.stmts[0] as IfStatement;
     assert.strictEqual(stmt.kind, "If");
     assert.strictEqual(stmt.thenBlock.length, 1);
@@ -124,23 +124,23 @@ test("simple jr statement — correct shape", () => {
     assert.strictEqual(stmt.elseBlock, null);
 });
 test("jr / nahitr jr / nahitr chain", () => {
-    const prog = parse(`bola saheb\njr khota {\n  he bol "a"\n} nahitr jr khota {\n  he bol "b"\n} nahitr {\n  he bol "c"\n}\nyeto saheb`);
+    const prog = parse(`bola saheb\njr chuk {\n  he bol "a"\n} nahitr jr chuk {\n  he bol "b"\n} nahitr {\n  he bol "c"\n}\nyeto saheb`);
     const stmt = prog.stmts[0] as IfStatement;
     assert.strictEqual(stmt.elseIfs.length, 1);
     assert.ok(stmt.elseBlock !== null);
 });
 test("joparyant — correct shape", () => {
-    const prog = parse(`bola saheb\njoparyant khota {\n  he bol "never"\n}\nyeto saheb`);
+    const prog = parse(`bola saheb\njoparyant chuk {\n  he bol "never"\n}\nyeto saheb`);
     const stmt = prog.stmts[0] as WhileStatement;
     assert.strictEqual(stmt.kind, "While");
     assert.strictEqual(stmt.body.length, 1);
 });
 test("thamb → BreakStatement", () => {
-    const prog = parse(`bola saheb\njoparyant khara {\n  thamb\n}\nyeto saheb`);
+    const prog = parse(`bola saheb\njoparyant barobr {\n  thamb\n}\nyeto saheb`);
     assert.strictEqual((prog.stmts[0] as WhileStatement).body[0].kind, "Break");
 });
 test("pudhe ja → ContinueStatement", () => {
-    const prog = parse(`bola saheb\njoparyant khara {\n  pudhe ja\n}\nyeto saheb`);
+    const prog = parse(`bola saheb\njoparyant barobr {\n  pudhe ja\n}\nyeto saheb`);
     assert.strictEqual((prog.stmts[0] as WhileStatement).body[0].kind, "Continue");
 });
 
