@@ -73,13 +73,6 @@ function App() {
     setError(null);
   };
 
-  const handleReset = () => {
-    setCode(EXAMPLES[selectedExample as keyof typeof EXAMPLES]);
-    setStatus('ready');
-    setOutput([]);
-    setError(null);
-  };
-
   const scrollToPlayground = () => {
     playgroundRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -102,89 +95,40 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* SECTION 1: HERO / INTRO */}
-      <section className="hero">
-        <div className="hero-content">
-          <div className="hero-logo">🗣️ BOL</div>
-          <h1 className="hero-title">A toy programming language built from scratch</h1>
-          <p className="hero-subtitle">
-            A Marathi-flavoured interpreted language designed for learning how compilers and interpreters work.
-          </p>
-          <div className="hero-cli">
-            <code>bol run examples/maza.bol</code>
-          </div>
-          <div className="hero-actions">
-            <button className="btn btn-primary" onClick={scrollToPlayground}>Try Playground</button>
-            <a href="https://github.com/YashK2511/bol-lang" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">View GitHub</a>
-          </div>
+      {/* 1️⃣ Hero Section */}
+      <header className="hero">
+        <h1 className="hero-title">MAHA LANG</h1>
+        <p className="hero-tagline">A programming language build from scratch.</p>
+        <p className="hero-subtext">A programming language built for marathi people.</p>
+        <p className="hero-credit">Created by Yash Kamble</p>
+        <div className="hero-actions">
+          <button className="btn btn-primary" onClick={scrollToPlayground}>Try Playground</button>
         </div>
-      </section>
+      </header>
 
-      {/* SECTION 2: WHAT I BUILT */}
-      <section className="built section">
+      {/* 2️⃣ Installation Section */}
+      <section className="installation section">
         <div className="section-container">
-          <h2 className="section-title">What I Built</h2>
-          <div className="content-box">
-            <p className="text-large">
-              BOL is an interpreted programming language designed to be small, explicit, and educational.
-            </p>
-            <div className="feature-grid">
-              <div className="feature-item">
-                <strong>Custom Interpreter</strong>
-                <p>Written entirely in TypeScript with zero dependencies.</p>
-              </div>
-              <div className="feature-item">
-                <strong>End-to-End Pipeline</strong>
-                <p>From character stream to AST execution.</p>
-              </div>
-              <div className="feature-item">
-                <strong>CLI & Web</strong>
-                <p>Packaged as a production-ready CLI and this web playground.</p>
-              </div>
+          <h2 className="section-title">Installation</h2>
+          <div className="installation-grid">
+            <div className="command-box">
+              <code className="command">npm i -g bol-lang</code>
+              <span className="label">Install CLI</span>
+            </div>
+            <div className="command-box">
+              <code className="command">bol run examples/maza.bol</code>
+              <span className="label">Run Code</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 3: HOW IT WORKS (PIPELINE) */}
-      <section className="works section">
-        <div className="section-container">
-          <h2 className="section-title">How It Works</h2>
-          <p className="section-description">
-            The BOL engine executes code in three distinct phases.
-          </p>
-          <div className="pipeline">
-            <div className="pipeline-step">
-              <div className="step-tag">1</div>
-              <h3>Lexer</h3>
-              <p>Breaks source code into <strong>Tokens</strong> like keywords, numbers, and strings.</p>
-            </div>
-            <div className="pipeline-arrow">→</div>
-            <div className="pipeline-step">
-              <div className="step-tag">2</div>
-              <h3>Parser</h3>
-              <p>Builds an <strong>Abstract Syntax Tree</strong> (AST) using recursive descent.</p>
-            </div>
-            <div className="pipeline-arrow">→</div>
-            <div className="pipeline-step">
-              <div className="step-tag">3</div>
-              <h3>Interpreter</h3>
-              <p>Walks the <strong>AST</strong> and performs runtime operations with scope and environment management.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4: PLAYGROUND */}
+      {/* 3️⃣ Playground Section */}
       <section className="playground section" ref={playgroundRef} id="playground">
-        <div className="section-container full-width">
-          <div className="playground-header">
-            <h2 className="section-title">Interative Playground</h2>
-            <p className="section-description white">Write BOL code and see it execute in real-time within your browser.</p>
-          </div>
-
+        <div className="section-container">
+          <h2 className="section-title">Playground</h2>
           <div className="playground-container">
-            <header className="playground-toolbar">
+            <div className="playground-toolbar">
               <div className="toolbar-left">
                 <select
                   className="example-selector"
@@ -195,24 +139,23 @@ function App() {
                   <option value="factorial">Factorial</option>
                   <option value="fibonacci">Fibonacci</option>
                 </select>
-                <button className="reset-button" onClick={handleReset}>Ghalav (Reset)</button>
               </div>
-              <div className="actions">
+              <div className="toolbar-right">
+                <div className={`status-badge ${status}`}>
+                  {status === 'ready' && 'Ready'}
+                  {status === 'running' && 'Running...'}
+                  {status === 'success' && 'Success'}
+                  {status === 'error' && 'Error'}
+                </div>
                 <button
-                  className={`run-button ${status === 'running' ? 'loading' : ''}`}
+                  className="run-button"
                   onClick={handleRun}
                   disabled={status === 'running'}
                 >
-                  {status === 'running' ? 'Chaltoy...' : 'Pala (Run)'}
+                  {status === 'running' ? 'Running...' : 'Run'}
                 </button>
-                <div className={`status-badge ${status}`}>
-                  {status === 'ready' && 'Tayyar'}
-                  {status === 'running' && 'Chalu'}
-                  {status === 'success' && 'Yashasvi'}
-                  {status === 'error' && 'Chuk'}
-                </div>
               </div>
-            </header>
+            </div>
 
             <div className="editor-console-wrapper">
               <div className="editor-panel">
@@ -244,15 +187,14 @@ function App() {
                 <div className="panel-header">Console Output</div>
                 <div className="console-content">
                   {output.length === 0 && !error && (
-                    <div className="empty-message">Output ithe disel...</div>
+                    <div className="empty-message">Output will appear here...</div>
                   )}
                   {output.map((line, i) => (
                     <div key={i} className="console-line">{line}</div>
                   ))}
                   {error && (
                     <div className="console-error">
-                      <span className="error-icon">✗</span>
-                      <span className="error-message">{error}</span>
+                      <div className="error-message">{error}</div>
                     </div>
                   )}
                 </div>
@@ -262,43 +204,52 @@ function App() {
         </div>
       </section>
 
-      {/* SECTION 5: HOW TO USE */}
-      <section className="usage section">
+      {/* 4️⃣ Documentation / Syntax Section */}
+      <section className="docs section">
         <div className="section-container">
-          <h2 className="section-title">How To Use</h2>
-          <div className="usage-grid">
-            <div className="usage-card">
-              <h3>For Web</h3>
-              <p>Use the editor above to experiment with variables, loops, and functions instantly.</p>
+          <h2 className="section-title">Documentation</h2>
+          <div className="docs-grid">
+            <div className="doc-card">
+              <h3>Start and End</h3>
+              <p>Start and End your code using the <code>bola saheb</code> and <code>yeto saheb</code> keyword.</p>
+              <div className="code-snippet">bola saheb {'{'} ... {'}'} yeto saheb</div>
             </div>
-            <div className="usage-card">
-              <h3>For CLI</h3>
-              <p>Install via npm and run local files:</p>
-              <code>bol run maza.bol</code>
+            <div className="doc-card">
+              <h3>Variables</h3>
+              <p>Declare variables using the <code>he ghe</code> keyword.</p>
+              <div className="code-snippet">he ghe x = 10</div>
             </div>
-            <div className="usage-card">
-              <h3>Syntax</h3>
-              <ul>
-                <li><code>he ghe x = 5</code> — Declare</li>
-                <li><code>he bol x</code> — Print</li>
-                <li><code>jr x &gt; 0</code> — If</li>
-                <li><code>karya f()</code> — Function</li>
-              </ul>
+            <div className="doc-card">
+              <h3>Print Statements</h3>
+              <p>Output values to the console using <code>he bol</code>.</p>
+              <div className="code-snippet">he bol "Namaskar World!"</div>
+            </div>
+            <div className="doc-card">
+              <h3>Conditionals</h3>
+              <p>Use <code>jr</code> for conditional execution.</p>
+              <div className="code-snippet">jr x &gt; 5 {'{'} ... {'}'}</div>
+            </div>
+            <div className="doc-card">
+              <h3>Loops</h3>
+              <p>Execute code blocks repeatedly using <code>joparyant</code>.</p>
+              <div className="code-snippet">joparyant x &gt; 0 {'{'} ... {'}'}</div>
+            </div>
+            <div className="doc-card">
+              <h3>Functions</h3>
+              <p>Define reusable logic with <code>karya</code>.</p>
+              <div className="code-snippet">karya f(n) {'{'} ... {'}'}</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 6: FOOTER */}
-      <footer className="footer-v2">
-        <div className="footer-content">
+      {/* 5️⃣ Footer */}
+      <footer className="footer">
+        <div className="section-container">
+          <p>Developed by Yash Kamble</p>
           <div className="footer-links">
-            <a href="https://github.com/YashK2511/bol-lang" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+            <a href="https://github.com/YashK2511/bol-lang" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
-          <p className="copyright">Built for learning by Yash • 2026</p>
-          <p className="disclaimer">
-            This is a learning-focused toy language, not intended for production use.
-          </p>
         </div>
       </footer>
     </div>
